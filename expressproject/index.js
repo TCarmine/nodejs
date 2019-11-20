@@ -6,8 +6,12 @@ const express = require('express');
 
 const app = express();
 
+// this enable to parse JSON from the client via the json middleware
+app.use(express.json());
+
+// my courses array Object
 const courses = [
-  { id: 1, name: 'Math'},
+{ id: 1, name: 'Math'},>
   { id: 2, name:'History'},
   { id: 3, name:'Physic'},
   { id: 4, name:'Algebra'}
@@ -41,6 +45,19 @@ app.get('/api/posts/',(req,res)=>{
 app.get('/api/posts/:id',(req,res)=>{
   res.send(req.query);
 })  
+
+// POST request
+
+app.post('/api/courses/', (req,res) => {
+  const course = {
+     id: courses.length + 1,
+     name: req.body.name
+  };
+  courses.push(course);
+  res.send(course);
+
+});
+
 
 // providing a way to use the available port
 const port = process.env.PORT  || 3000;
