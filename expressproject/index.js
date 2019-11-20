@@ -11,7 +11,7 @@ app.use(express.json());
 
 // my courses array Object
 const courses = [
-{ id: 1, name: 'Math'},>
+  { id: 1, name: 'Math'},
   { id: 2, name:'History'},
   { id: 3, name:'Physic'},
   { id: 4, name:'Algebra'}
@@ -23,7 +23,7 @@ app.get('/',(req,res)=>{
 });
 
 app.get('/api/courses',(req,res)=>{
-    res.send([1,2,3]);
+    res.send(courses);
   });
 
 app.get('/api/courses/:id',(req,res)=>{
