@@ -19,6 +19,16 @@ const courses = [
   { id: 4, name:'Algebra'}
 ];
 
+
+function validateCourse(req,course){
+  const schema = {
+    name: Joi.string().min(3).required()
+  }; 
+  const result =  Joi.validate(req.body, schema);
+  return result;
+
+}
+
 // get examples for Express
 app.get('/',(req,res)=>{
   res.send('Hey There!');
@@ -55,14 +65,14 @@ app.post('/api/courses/', (req,res) => {
   // Basic validation, implemented with joi
   
     // Handling 400 Bad request
-  const schema = {
-    name: Joi.string().min(3).required()
-  };
-  // object returned after validation
+  // const validated = {
+  //   name: Joi.string().min(3).required()
+  // };
+  // // object returned after validation
 
-  const result =  Joi.validate(req.body, schema);
+   const validated = validateCourse(req);
     
-  if(result.error){
+  if(validated.error){
     //if 400 showing error details message
     res.status(400).send(result.error.details[0].message);
     return;
@@ -91,12 +101,11 @@ app.put('/api/courses/:id',(req,res)=>{
   
   if (!course)  res.status(404).send(`The course with the given ID:${id}  was not found`);
   
-  // Validation
+  // Validation 
   // if invalid return 400 - Bad request
-  const schema = {
-    name: Joi.string().min(3).required()
-  }; 
-  const result =  Joi.validate(req.body, schema);
+
+  const result = validateCourse(course);
+  
 
   if(result.error){
     //if 400 showing error details message
