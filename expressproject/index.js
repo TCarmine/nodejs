@@ -53,6 +53,11 @@ app.get('/api/posts/',(req,res)=>{
   res.send(req.query);
 })  
 
+app.get('api/courses/',(req,res)=>{
+  
+  const sortBy = req.query.sortBy;
+  res.send(courses);  
+})
 
 app.get('/api/posts/:id',(req,res)=>{
   res.send(req.query);
