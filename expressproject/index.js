@@ -61,23 +61,15 @@ app.get('/api/posts/:id',(req,res)=>{
 // POST request
 
 app.post('/api/courses/', (req,res) => {
-  
   // Basic validation, implemented with joi
-  
-    // Handling 400 Bad request
-  // const validated = {
-  //   name: Joi.string().min(3).required()
-  // };
-  // // object returned after validation
-
-   const validated = validateCourse(req.body);
-    
-  if(validated.error){
+  // Handling 400 Bad request
+  // object returned after validation
+  const { error } = validateCourse(req.body);
+  if(error){
     //if 400 showing error details message
     res.status(400).send(result.error.details[0].message);
     return;
   }
-
   const course = {
      id: courses.length + 1,
      name: req.body.name
@@ -104,10 +96,12 @@ app.put('/api/courses/:id',(req,res)=>{
   // Validation 
   // if invalid return 400 - Bad request
 
-  const result = validateCourse(course);
+  const result = validateCourse(req.body);
+  // object destructuring
+  const { error } = validateCourse(course); // result.error
   
 
-  if(result.error){
+  if(error){
     //if 400 showing error details message
     res.status(400).send(result.error.details[0].message);
     return;
