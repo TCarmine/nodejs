@@ -77,6 +77,37 @@ app.post('/api/courses/', (req,res) => {
 
 });
 
+// Update a course with PUT method
+
+// Look up the course
+// If course does not exist return 404
+// Validate the course and if is not in a good shape return 400
+// Update the course and return to client
+
+app.put('/api/courses/:id',(req,res)=>{
+  // check if a course with id exist
+  const id = req.params.id;
+  const course = courses.find( c => c.id === parseInt(id));
+  
+  if (!course)  res.status(404).send(`The course with the given ID:${id}  was not found`);
+  
+  // Validation
+  // if invalid return 400 - Bad request
+  const schema = {
+    name: Joi.string().min(3).required()
+  }; 
+  const result =  Joi.validate(req.body, schema);
+
+  if(result.error){
+    //if 400 showing error details message
+    res.status(400).send(result.error.details[0].message);
+    return;
+  }
+  // Update the correct course 
+  course.name = req.body.name;
+  
+  res.send(course);
+})  
 
 // providing a way to use the available port
 const port = process.env.PORT  || 3000;
