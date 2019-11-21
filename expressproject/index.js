@@ -90,7 +90,6 @@ app.put('/api/courses/:id',(req,res)=>{
   // check if a course with id exist
   const id = req.params.id;
   const course = courses.find( c => c.id === parseInt(id));
-  
   if (!course)  res.status(404).send(`The course with the given ID:${id}  was not found`);
   
   // Validation 
@@ -112,6 +111,20 @@ app.put('/api/courses/:id',(req,res)=>{
   res.send(course);
 })  
 
+
+app.delete('/api/courses/:id',(req, res)=>{
+  // Look up the course
+  // if does not exist rise 404
+  // or 400 for Bad request
+  const id = req.params.id;
+  const course = courses.find( c => c.id === parseInt(id));
+  if (!course)  res.status(404).send(`The course with the given ID:${id}  was not found`);
+
+  const index= courses.indexOf(course);
+  courses.splice(index,1);
+  res.send(course);
+
+})
 // providing a way to use the available port
 const port = process.env.PORT  || 3000;
 
