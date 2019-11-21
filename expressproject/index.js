@@ -70,7 +70,7 @@ app.post('/api/courses/', (req,res) => {
   // };
   // // object returned after validation
 
-   const validated = validateCourse(req);
+   const validated = validateCourse(req.body);
     
   if(validated.error){
     //if 400 showing error details message
