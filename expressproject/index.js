@@ -90,10 +90,7 @@ app.put('/api/courses/:id',(req,res)=>{
   // check if a course with id exist
   const id = req.params.id;
   const course = courses.find( c => c.id === parseInt(id));
-  if (!course) {
-     res.status(404).send(`The course with the given ID:${id}  was not found`);
-     return;
-  }
+  if (!course) return  res.status(404).send(`The course with the given ID:${id}  was not found`);
   // Validation 
   // if invalid return 400 - Bad request
 
