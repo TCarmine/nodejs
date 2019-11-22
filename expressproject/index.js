@@ -1,15 +1,25 @@
+
 // Validation package class
+const morgan = require('morgan');
+const helmet = require('helmet');
 const Joi = require('joi');
 
-// import _ from 'lodash';
-
+const logger = require('./logger');
 const express = require('express'); 
-// const process = require('process');
+
 
 const app = express();
 
 // this enable to parse JSON from the client via the json middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended:true}));
+app.use(logger);
+
+//middleware for static files
+app.use(express.static('public'));
+app.use(helmet());
+app.use(morgan('tiny'));
+
 
 // my courses array Object
 const courses = [
