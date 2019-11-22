@@ -1,4 +1,4 @@
-
+const config = require('config');
 // Validation package class
 const morgan = require('morgan');
 const helmet = require('helmet');
@@ -10,11 +10,6 @@ const express = require('express');
 
 const app = express();
 
-if(app.get('env') === 'development'){
-  app.use(morgan('tiny'));
-  console.log('Morgan middleware logging request enabled as dev env')
-};
-
 // this enable to parse JSON from the client via the json middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended:true}));
@@ -23,6 +18,20 @@ app.use(logger);
 //middleware for static files
 app.use(express.static('public'));
 app.use(helmet());
+
+// Configuration
+
+
+console.log('Application name: ' +  config.get('name'))
+console.log('Mail Server: ' +  config.get('mail.host')) 
+
+
+if(app.get('env') === 'development'){
+  app.use(morgan('tiny'));
+  console.log('Morgan middleware logging request enabled as dev env')
+};
+
+
 
 
 
